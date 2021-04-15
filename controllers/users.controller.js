@@ -18,22 +18,26 @@ const addUser = (req, res) => {
     return u.passport == passport;
   })
 
-  if (!passport) {
-    return res.status(200).json({ error: "please enter passport number" })
-  } else if (passport.length < 9 || passport.includs(' ')) {
-    return res.status(200).json({ error: 'passport must includes 9 numbers with no space' })
+
+
+  if (!passport || !cash || !credit) {
+    return res.status(204).json({ error: "please enter passport number" })
+  } else if (passport < 100000000 || isNaN(passport)) {
+    return res.status(200).json({ error: 'passport must include 9 numbers with no space' })
   } else if (result) {
     return res.status(200).json({ error: 'user exist in db' })
+  } else if (cash < 0 || isNaN(cash) || credit < 0 || isNaN(credit)) {
+    return res.status(200).json({ error: 'credit and cash must be zero or more' })
   }
 
   const usersjson = {
     passport,
-    cash,
-    credit
+    cash: cash,
+    credit: credit
   }
 
   users.push(usersjson);
-  return res.send(usersjson);
+  return res.status(200).json({ usersjson: usersjson })
 }
 
 module.exports = {

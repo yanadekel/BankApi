@@ -4,7 +4,8 @@ const usersController = require('../controllers/users.controller');
 
 
 router.post('/', (req, res) => {
-  usersController.addWorker(req, res);
+  usersController.addUser(req, res);
+  
 })
 
 
