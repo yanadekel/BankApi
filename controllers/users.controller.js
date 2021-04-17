@@ -21,6 +21,7 @@ const users = [
 
 
 const addUser = (req, res) => {
+
   const { passport, cash, credit } = req.body;
 
   let result = users.find((u) => {
@@ -87,9 +88,22 @@ const getUsers = (req, res) => {
 
 
 const getUsersBypassport = (req, res) => {
-  const { passport } = req.params;
+  const  passport  = req.query.passport;
+
   let user = users.find((u) => {
     return u.passport == passport;
+  })
+
+  if (!user) {
+    res.status(200).send("user not exisist")
+  }
+  return res.status(200).json({ user: user })
+}
+
+const getUsersBycash = (req, res) => {
+  const cash =  req.query.cash;
+  let user = users.find((u) => {
+    return u.cash == cash;
   })
 
   if (!user) {
@@ -232,4 +246,5 @@ module.exports = {
   putCredit,
   putWithdrawMoney,
   transferMoney,
+  getUsersBycash
 }
