@@ -17,6 +17,8 @@ router.post('/', (req, res) => {
     usersController.getUsersBypassport(req, res);
   }else if (req.query.isActive) {
     usersController.getUsersByactive(req, res);
+  }else if (req.query.isActive) {
+    usersController.getUsersByactiveAndcash(req, res);
   }else {
     res.status(404).send("error")
   }

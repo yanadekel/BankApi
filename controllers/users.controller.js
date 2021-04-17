@@ -128,6 +128,22 @@ const getUsersByactive = (req, res) => {
   return res.status(200).json({ user: user })
 }
 
+const getUsersByactiveAndcash = (req, res) => {
+  const isActive =  req.query.isActive=="true";
+  const cash = req.query.cash
+  let user = users.find((u) => {
+    if ( u.isActive == isActive){
+       u.cash == cash;
+    }
+   
+  })
+
+  if (!user || !cash) {
+    res.status(200).send("user not exisist")
+  }
+  return res.status(200).json({ user: user })
+}
+
 const putDeposit = (req, res) => {
   const { passport } = req.params;
   const { cash } = req.body;
@@ -263,5 +279,6 @@ module.exports = {
   putWithdrawMoney,
   transferMoney,
   getUsersBycash,
-  getUsersByactive
+  getUsersByactive,
+  getUsersByactiveAndcash
 }
