@@ -4,17 +4,20 @@ const users = [
   {
     "passport": 123454311,
     "cash": 600,
-    "credit": 500
+    "credit": 500,
+    "isActive":false
   },
   {
     "passport": 123454312,
     "cash": 700,
-    "credit": 500
+    "credit": 500,
+    "isActive":false
   },
   {
     "passport": 123454313,
     "cash": 800,
-    "credit": 500
+    "credit": 500,
+    "isActive":true
   }
 ]
 
@@ -43,6 +46,7 @@ const addUser = (req, res) => {
     passport,
     cash,
     credit,
+    isActive
   }
 
 
@@ -104,6 +108,18 @@ const getUsersBycash = (req, res) => {
   const cash =  req.query.cash;
   let user = users.find((u) => {
     return u.cash == cash;
+  })
+
+  if (!user) {
+    res.status(200).send("user not exisist")
+  }
+  return res.status(200).json({ user: user })
+}
+
+const getUsersByactive = (req, res) => {
+  const isActive =  req.query.isActive=="true";
+  let user = users.find((u) => {
+    return u.isActive == isActive;
   })
 
   if (!user) {
@@ -246,5 +262,6 @@ module.exports = {
   putCredit,
   putWithdrawMoney,
   transferMoney,
-  getUsersBycash
+  getUsersBycash,
+  getUsersByactive
 }
